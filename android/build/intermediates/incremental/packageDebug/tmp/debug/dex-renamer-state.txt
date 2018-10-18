@@ -1,0 +1,4 @@
+#Thu Oct 18 22:41:59 MSK 2018
+base.0=/home/grednoud/projects/BattleSpace/android/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
