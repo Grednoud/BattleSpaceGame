@@ -51,6 +51,28 @@ public class GameScreen extends BaseScreen {
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+
+        switch (keycode) {
+            case 19:
+                destination.set(pos.add(direction.set(0, 1).scl(SHIP_SPEED)));
+                break;
+            case 20:
+                destination.set(pos.add(direction.set(0, -1).scl(SHIP_SPEED)));
+                break;
+            case 21:
+                destination.set(pos.add(direction.set(-1, 0).scl(SHIP_SPEED)));
+                break;
+            case 22:
+                destination.set(pos.add(direction.set(1, 0).scl(SHIP_SPEED)));
+                break;
+            default:
+                break;
+        }
+        return super.keyDown(keycode);
+    }
+
     private void moveShip() {
         if (direction.len() != 0) {
             float distance = destination.cpy().sub(pos).len();
