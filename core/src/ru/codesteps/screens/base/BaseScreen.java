@@ -3,6 +3,7 @@ package ru.codesteps.screens.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import java.util.logging.Level;
 
 import java.util.logging.Logger;
 
@@ -46,12 +47,13 @@ public  abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        log.info("Keycode: " + keycode);
+        log.log(Level.INFO, "keyDown({0})", keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        log.log(Level.INFO, "keyUp({0})", keycode);
         return false;
     }
 
@@ -62,7 +64,7 @@ public  abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        log.info("touchDown(" + screenX + ", " + screenY + ")");
+        log.log(Level.INFO, "touchDown({0}, {1})", new Object[]{screenX, screenY});
         return false;
     }
 

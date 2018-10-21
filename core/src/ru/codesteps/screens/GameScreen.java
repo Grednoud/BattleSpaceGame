@@ -11,17 +11,17 @@ import ru.codesteps.screens.base.BaseScreen;
 public class GameScreen extends BaseScreen {
 
     private final BattleSpaceGame game;
-    private final float SHIP_SPEED = 20f;
+    private final float SHIP_SPEED = 10f;
 
     private Texture ship;
-    private Vector2 pos;
+    private Vector2 position;
     private Vector2 direction;
     private Vector2 destination;
 
     public GameScreen(final BattleSpaceGame game) {
         this.game = game;
         ship = new Texture("death-star.png");
-        pos = new Vector2(0, 0);
+        position = new Vector2(0, 0);
         destination = new Vector2(0, 0);
         direction = new Vector2(0, 0);
     }
@@ -32,7 +32,7 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(ship, pos.x, pos.y);
+        game.batch.draw(ship, position.x, position.y);
         game.batch.end();
         moveShip();
     }
@@ -47,40 +47,56 @@ public class GameScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         destination.set(screenX - ship.getWidth() / 2,
                 Gdx.graphics.getHeight() - screenY - ship.getHeight() / 2);
-        direction = destination.cpy().sub(pos).nor().scl(SHIP_SPEED);
+        direction = destination.cpy().sub(position).nor().scl(SHIP_SPEED);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
     @Override
     public boolean keyDown(int keycode) {
-
         switch (keycode) {
             case 19:
-                destination.set(pos.add(direction.set(0, 1).scl(SHIP_SPEED)));
+                direction.set(0, 1).scl(SHIP_SPEED);
                 break;
             case 20:
-                destination.set(pos.add(direction.set(0, -1).scl(SHIP_SPEED)));
+                direction.set(0, -1).scl(SHIP_SPEED);
                 break;
             case 21:
-                destination.set(pos.add(direction.set(-1, 0).scl(SHIP_SPEED)));
+                direction.set(-1, 0).scl(SHIP_SPEED);
                 break;
             case 22:
-                destination.set(pos.add(direction.set(1, 0).scl(SHIP_SPEED)));
+                direction.set(1, 0).scl(SHIP_SPEED);
                 break;
             default:
                 break;
         }
+        destination.set(-100, -100);
         return super.keyDown(keycode);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+                destination.set(position.x, position.y);
+                direction.set(0, 0);
+                break;
+            default:
+                break;
+        }
+        return super.keyUp(keycode);
     }
 
     private void moveShip() {
         if (direction.len() != 0) {
-            float distance = destination.cpy().sub(pos).len();
+            float distance = destination.cpy().sub(position).len();
             if (distance <= SHIP_SPEED) {
-                pos.set(destination.x, destination.y);
+                position.set(destination.x, destination.y);
                 direction.set(0, 0);
             }
-            pos.add(direction);
+            position.add(direction);
         }
     }
 }
