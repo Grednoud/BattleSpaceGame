@@ -10,20 +10,18 @@ import ru.codesteps.screens.base.BaseScreen;
 
 public class GameScreen extends BaseScreen {
 
-    private final BattleSpaceGame game;
-    private final float SHIP_SPEED = 20f;
-
+    private Texture background;
     private Texture ship;
-    private Vector2 pos;
-    private Vector2 direction;
-    private Vector2 destination;
+
+    private Vector2 position;
+    private Vector2 touch;
 
     public GameScreen(final BattleSpaceGame game) {
-        this.game = game;
+        super(game);
+        background = new Texture("background.jpg");
         ship = new Texture("death-star.png");
-        pos = new Vector2(0, 0);
-        destination = new Vector2(0, 0);
-        direction = new Vector2(0, 0);
+        position = new Vector2(0, 0);
+        touch = new Vector2(0, 0);
     }
 
     @Override
@@ -32,7 +30,8 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(ship, pos.x, pos.y);
+        game.batch.draw(background, 0, 0, 0.7f, 1f);
+        game.batch.draw(ship, position.x, position.y, 0.075f, 0.075f);
         game.batch.end();
         moveShip();
     }
@@ -43,22 +42,8 @@ public class GameScreen extends BaseScreen {
         super.dispose();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        destination.set(screenX - ship.getWidth() / 2,
-                Gdx.graphics.getHeight() - screenY - ship.getHeight() / 2);
-        direction = destination.cpy().sub(pos).nor().scl(SHIP_SPEED);
-        return super.touchDown(screenX, screenY, pointer, button);
+    private void moveShip() {
+        
     }
 
-    private void moveShip() {
-        if (direction.len() != 0) {
-            float distance = destination.cpy().sub(pos).len();
-            if (distance <= SHIP_SPEED) {
-                pos.set(destination.x, destination.y);
-                direction.set(0, 0);
-            }
-            pos.add(direction);
-        }
-    }
 }
