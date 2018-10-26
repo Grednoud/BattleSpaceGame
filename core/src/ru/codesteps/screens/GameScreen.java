@@ -10,20 +10,18 @@ import ru.codesteps.screens.base.BaseScreen;
 
 public class GameScreen extends BaseScreen {
 
-    private final BattleSpaceGame game;
-    private final float SHIP_SPEED = 10f;
-
+    private Texture background;
     private Texture ship;
+
     private Vector2 position;
-    private Vector2 direction;
-    private Vector2 destination;
+    private Vector2 touch;
 
     public GameScreen(final BattleSpaceGame game) {
-        this.game = game;
+        super(game);
+        background = new Texture("background.jpg");
         ship = new Texture("death-star.png");
         position = new Vector2(0, 0);
-        destination = new Vector2(0, 0);
-        direction = new Vector2(0, 0);
+        touch = new Vector2(0, 0);
     }
 
     @Override
@@ -32,7 +30,8 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(ship, position.x, position.y);
+        game.batch.draw(background, 0, 0, 0.7f, 1f);
+        game.batch.draw(ship, position.x, position.y, 0.075f, 0.075f);
         game.batch.end();
         moveShip();
     }
@@ -43,60 +42,8 @@ public class GameScreen extends BaseScreen {
         super.dispose();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        destination.set(screenX - ship.getWidth() / 2,
-                Gdx.graphics.getHeight() - screenY - ship.getHeight() / 2);
-        direction = destination.cpy().sub(position).nor().scl(SHIP_SPEED);
-        return super.touchDown(screenX, screenY, pointer, button);
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case 19:
-                direction.set(0, 1).scl(SHIP_SPEED);
-                break;
-            case 20:
-                direction.set(0, -1).scl(SHIP_SPEED);
-                break;
-            case 21:
-                direction.set(-1, 0).scl(SHIP_SPEED);
-                break;
-            case 22:
-                direction.set(1, 0).scl(SHIP_SPEED);
-                break;
-            default:
-                break;
-        }
-        destination.set(-100, -100);
-        return super.keyDown(keycode);
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-                destination.set(position.x, position.y);
-                direction.set(0, 0);
-                break;
-            default:
-                break;
-        }
-        return super.keyUp(keycode);
-    }
-
     private void moveShip() {
-        if (direction.len() != 0) {
-            float distance = destination.cpy().sub(position).len();
-            if (distance <= SHIP_SPEED) {
-                position.set(destination.x, destination.y);
-                direction.set(0, 0);
-            }
-            position.add(direction);
-        }
+        
     }
+
 }
