@@ -3,47 +3,79 @@ package ru.codesteps.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import ru.codesteps.BattleSpaceGame;
-import ru.codesteps.screens.base.BaseScreen;
+import ru.codesteps.base.BaseRectangle;
+import ru.codesteps.base.BaseScreen;
+import ru.codesteps.sprites.Background;
+import ru.codesteps.sprites.Star;
 
 public class GameScreen extends BaseScreen {
 
-    private Texture background;
-    private Texture ship;
+    private static final int STARS_COUNT = 256;
 
-    private Vector2 position;
-    private Vector2 touch;
+    private Texture bgTexture;
+    private TextureAtlas gameAtlas;
+    private Background background;
+    private Star[] stars;
 
     public GameScreen(final BattleSpaceGame game) {
         super(game);
-        background = new Texture("background.jpg");
-        ship = new Texture("death-star.png");
-        position = new Vector2(0, 0);
-        touch = new Vector2(0, 0);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        bgTexture = new Texture("game-bg.jpg");
+        background = new Background(new TextureRegion(bgTexture));
+
+        gameAtlas = new TextureAtlas("./game/pack.atlas");
+        stars = new Star[STARS_COUNT];
+        for (int i = 0; i < stars.length; i++) {
+            stars[i] = new Star(gameAtlas);
+        }
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.batch.begin();
-        game.batch.draw(background, 0, 0, 0.7f, 1f);
-        game.batch.draw(ship, position.x, position.y, 0.075f, 0.075f);
-        game.batch.end();
-        moveShip();
+        super.render(delta);
+        update(delta);
+        draw();
     }
 
     @Override
     public void dispose() {
-        ship.dispose();
+        bgTexture.dispose();
+
         super.dispose();
     }
 
-    private void moveShip() {
-        
+    @Override
+    public void resize(BaseRectangle worldBounds) {
+        background.resize(worldBounds);
+        for (Star s : stars) {
+            s.resize(worldBounds);
+        }
+    }
+
+    private void update(float delta) {
+        for (Star s : stars) {
+            s.update(delta);
+        }
+    }
+
+    private void draw() {
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        background.draw(batch);
+        for (Star s : stars) {
+            s.draw(batch);
+        }
+        batch.end();
     }
 
 }
