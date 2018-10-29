@@ -1,22 +1,28 @@
 package ru.codesteps;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.Screen;
 import ru.codesteps.screens.GameScreen;
 
-public class BattleSpaceGame extends Game {
+import ru.codesteps.screens.MenuScreen;
 
-    public SpriteBatch batch;
+public class BattleSpaceGame extends Game {
+    private Screen menuScreen;
+    private Screen gameScreen;
+    
+    public void setMenuScreen() {
+        setScreen(menuScreen);
+    }
+    
+    public void setGameScreen() {
+        setScreen(gameScreen);
+    }
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        this.setScreen(new GameScreen(this));
+        menuScreen = new MenuScreen(this);
+        gameScreen = new GameScreen(this);
+        setScreen(menuScreen);
     }
 
-    @Override
-    public void dispose() {
-        batch.dispose();
-    }
 }
