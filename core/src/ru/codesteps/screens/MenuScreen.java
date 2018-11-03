@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.BattleSpaceGame;
+import ru.codesteps.base.ActionListener;
 import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.BaseScreen;
 import ru.codesteps.base.BaseSprite;
@@ -20,12 +21,12 @@ public class MenuScreen extends BaseScreen {
     private BaseSprite ship;
     private Texture bgTexture;
     private Background background;
+    private TextureAtlas buttonAtlas;
+
     private PlayButton playBtn;
     private ExitButton exitBtn;
 
     private Vector2 touch;
-
-    private TextureAtlas buttonAtlas;
 
     public MenuScreen(final BattleSpaceGame game) {
         super(game);
@@ -40,16 +41,23 @@ public class MenuScreen extends BaseScreen {
         ship = new Background(new TextureRegion(shipTexture));
         ship.setHeightProportion(0.5f);
         ship.setTop(1f);
+
         bgTexture = new Texture("bg.jpg");
         background = new Background(new TextureRegion(bgTexture));
 
-        buttonAtlas = new TextureAtlas("./buttons/pack.atlas");
-        playBtn = new PlayButton(buttonAtlas, game);
-        playBtn.setHeightProportion(0.25f);
-        playBtn.setTop(0.4f);
-        exitBtn = new ExitButton(buttonAtlas);
-        exitBtn.setHeightProportion(0.25f);
-        exitBtn.setTop(0.2f);
+        buttonAtlas = new TextureAtlas("buttons/pack.atlas");
+        playBtn = new PlayButton(buttonAtlas, new ActionListener() {
+            @Override
+            public void actionPerformed(Object src) {
+                game.setGameScreen();
+            }
+        });
+        exitBtn = new ExitButton(buttonAtlas, new ActionListener() {
+            @Override
+            public void actionPerformed(Object src) {
+                Gdx.app.exit();
+            }
+        });
     }
 
     @Override
@@ -57,6 +65,24 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         update(delta);
         draw();
+    }
+
+    private void update(float delta) {
+//        exitBtn.update(delta);
+//        playBtn.update(delta);
+    }
+
+    private void draw() {
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        background.draw(batch);
+        ship.draw(batch);
+        exitBtn.draw(batch);
+        playBtn.draw(batch);
+
+        batch.end();
     }
 
     @Override
@@ -70,49 +96,23 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void resize(BaseRectangle worldBounds) {
         background.resize(worldBounds);
-    }
-
-    private void update(float delta) {
-
-    }
-
-    private void draw() {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.begin();
-        background.draw(batch);
-        ship.draw(batch);
-        playBtn.draw(batch);
-        exitBtn.draw(batch);
-        batch.end();
+        exitBtn.resize(worldBounds);
+        playBtn.resize(worldBounds);
+        super.resize(worldBounds);
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY).mul(screenToWorld);
-        if (playBtn.isInside(touch)) {
-            playBtn.touchUp(touch, pointer);
-        }
-        if (exitBtn.isInside(touch)) {
-            exitBtn.touchUp(touch, pointer);
-        }
-        
-        exitBtn.setScale(1f);
-        playBtn.setScale(1f);
-        return super.touchUp(screenX, screenY, pointer, button);
+    public boolean touchUp(Vector2 touch, int pointer) {
+        exitBtn.touchUp(touch, pointer);
+        playBtn.touchUp(touch, pointer);
+        return super.touchUp(touch, pointer);
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY).mul(screenToWorld);
-        if (playBtn.isInside(touch)) {
-            playBtn.touchDown(touch, pointer);
-        }
-        if (exitBtn.isInside(touch)) {
-            exitBtn.touchDown(touch, pointer);
-        }
-        return super.touchDown(screenX, screenY, pointer, button);
+    public boolean touchDown(Vector2 touch, int pointer) {
+        exitBtn.touchDown(touch, pointer);
+        playBtn.touchDown(touch, pointer);
+        return super.touchDown(touch, pointer);
     }
 
 }
