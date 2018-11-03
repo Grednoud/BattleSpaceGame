@@ -14,7 +14,7 @@ import ru.codesteps.sprites.Star;
 
 public class GameScreen extends BaseScreen {
 
-    private static final int STARS_COUNT = 256;
+    private static final int STARS_COUNT = 64;
 
     private Texture bgTexture;
     private TextureAtlas gameAtlas;
@@ -31,7 +31,7 @@ public class GameScreen extends BaseScreen {
         bgTexture = new Texture("game-bg.jpg");
         background = new Background(new TextureRegion(bgTexture));
 
-        gameAtlas = new TextureAtlas("./game/pack.atlas");
+        gameAtlas = new TextureAtlas("game/pack.atlas");
         stars = new Star[STARS_COUNT];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(gameAtlas);

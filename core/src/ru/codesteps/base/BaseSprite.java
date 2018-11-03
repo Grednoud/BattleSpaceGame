@@ -11,11 +11,12 @@ public abstract class BaseSprite extends BaseRectangle {
     protected TextureRegion[] regions;
     protected int frame;
 
-    public BaseSprite(TextureRegion... regions) {
-        if (regions == null) {
+    public BaseSprite(TextureRegion region) {
+        if (region == null) {
             throw new NullPointerException("region is null");
         }
-        this.regions = regions;
+        regions = new TextureRegion[1];
+        regions[0] = region;
     }
 
     public void draw(SpriteBatch batch) {

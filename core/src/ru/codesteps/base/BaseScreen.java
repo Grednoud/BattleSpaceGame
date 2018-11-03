@@ -113,14 +113,25 @@ public abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        log.log(Level.INFO, "touchDown({0}, {1}) screen coordinates", new Object[]{screenX, screenY});
         buffer.set(screenX, screenBounds.height - screenY).mul(screenToWorld);
-        log.log(Level.INFO, "touchDown({0}, {1}) world coordinates", new Object[]{buffer.x, buffer.y});
+        touchDown(buffer, pointer);
+        return false;
+    }
+
+    public boolean touchDown(Vector2 touch, int pointer) {
+        log.log(Level.INFO, "touchDown({0}, {1})", new Object[] {touch.x, touch.y});
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        buffer.set(screenX, screenBounds.height - screenY).mul(screenToWorld);
+        touchUp(buffer, pointer);
+        return false;
+    }
+
+    public boolean touchUp(Vector2 touch, int pointer) {
+        log.log(Level.INFO, "touchUp({0}, {1})", new Object[] {touch.x, touch.y});
         return false;
     }
 
