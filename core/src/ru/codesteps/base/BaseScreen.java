@@ -137,6 +137,13 @@ public abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        buffer.set(screenX, screenBounds.height - screenY).mul(screenToWorld);
+        touchDragged(buffer, pointer);
+        return false;
+    }
+    
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        log.log(Level.INFO, "touchDragged({0}, {1})", new Object[] {touch.x, touch.y});
         return false;
     }
 

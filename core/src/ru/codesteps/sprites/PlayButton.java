@@ -12,11 +12,6 @@ public class PlayButton extends BaseButton {
     }
 
     @Override
-    public void update(float delta) {
-        //TODO
-    }
-
-    @Override
     public void resize(BaseRectangle worldBounds) {
         setTop(0.35f);
     }

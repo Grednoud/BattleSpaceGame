@@ -3,13 +3,20 @@ package ru.codesteps.base;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import ru.codesteps.utils.RegionsUtil;
 
-public abstract class BaseSprite extends BaseRectangle {
+public class BaseSprite extends BaseRectangle {
 
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+
+    private boolean isDestroyed;
+
+    public BaseSprite() {
+
+    }
 
     public BaseSprite(TextureRegion region) {
         if (region == null) {
@@ -17,6 +24,10 @@ public abstract class BaseSprite extends BaseRectangle {
         }
         regions = new TextureRegion[1];
         regions[0] = region;
+    }
+
+    public BaseSprite(TextureRegion region, int rows, int columns, int frames) {
+        regions = RegionsUtil.split(region, rows, columns, frames);
     }
 
     public void draw(SpriteBatch batch) {
@@ -34,13 +45,21 @@ public abstract class BaseSprite extends BaseRectangle {
         this.width = height * aspect;
     }
 
-    public abstract void update(float delta);
+    public void update(float delta) {
 
-    public abstract void resize(BaseRectangle worldBounds);
+    }
 
-    public abstract boolean touchDown(Vector2 touch, int pointer);
+    public void resize(BaseRectangle worldBounds) {
 
-    public abstract boolean touchUp(Vector2 touch, int pointer);
+    }
+
+    public boolean touchDown(Vector2 touch, int pointer) {
+        return false;
+    }
+
+    public boolean touchUp(Vector2 touch, int pointer) {
+        return false;
+    }
 
     public float getAngle() {
         return angle;
@@ -56,6 +75,18 @@ public abstract class BaseSprite extends BaseRectangle {
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+
+    public void destroy() {
+        isDestroyed = true;
+    }
+
+    public void make() {
+        isDestroyed = false;
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 
 }

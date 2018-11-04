@@ -26,8 +26,6 @@ public class MenuScreen extends BaseScreen {
     private PlayButton playBtn;
     private ExitButton exitBtn;
 
-    private Vector2 touch;
-
     public MenuScreen(final BattleSpaceGame game) {
         super(game);
     }
@@ -35,10 +33,9 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        touch = new Vector2();
 
         shipTexture = new Texture("ship_logo.png");
-        ship = new Background(new TextureRegion(shipTexture));
+        ship = new BaseSprite(new TextureRegion(shipTexture));
         ship.setHeightProportion(0.5f);
         ship.setTop(1f);
 

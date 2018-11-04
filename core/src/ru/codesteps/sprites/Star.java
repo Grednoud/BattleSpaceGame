@@ -32,16 +32,6 @@ public class Star extends BaseSprite {
         pos.set(posX, posY);
     }
 
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(Vector2 touch, int pointer) {
-        return false;
-    }
-
     private void checkAndHandleBounds() {
         if (getRight() < worldBounds.getLeft()) {
             setLeft(worldBounds.getRight());

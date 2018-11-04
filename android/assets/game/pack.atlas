@@ -1,12 +1,26 @@
 
 pack.png
-size: 16,16
+size: 512,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-star
+bullet
   rotate: false
   xy: 2, 2
+  size: 5, 25
+  orig: 5, 25
+  offset: 0, 0
+  index: -1
+main-ship
+  rotate: false
+  xy: 2, 29
+  size: 304, 256
+  orig: 304, 256
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 308, 280
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
