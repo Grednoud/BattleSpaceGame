@@ -1,27 +1,173 @@
 
 pack.png
-size: 512,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 bullet
   rotate: false
-  xy: 2, 2
+  xy: 1001, 749
   size: 5, 25
   orig: 5, 25
   offset: 0, 0
   index: -1
+enemy1.0
+  rotate: false
+  xy: 2, 260
+  size: 261, 256
+  orig: 261, 256
+  offset: 0, 0
+  index: -1
+enemy1.1
+  rotate: false
+  xy: 265, 260
+  size: 261, 256
+  orig: 261, 256
+  offset: 0, 0
+  index: -1
+enemy1.2
+  rotate: false
+  xy: 528, 260
+  size: 261, 256
+  orig: 261, 256
+  offset: 0, 0
+  index: -1
+enemy1.3
+  rotate: false
+  xy: 2, 2
+  size: 261, 256
+  orig: 261, 256
+  offset: 0, 0
+  index: -1
+enemy2.0
+  rotate: false
+  xy: 265, 2
+  size: 199, 256
+  orig: 199, 256
+  offset: 0, 0
+  index: -1
+enemy2.1
+  rotate: false
+  xy: 466, 2
+  size: 199, 256
+  orig: 199, 256
+  offset: 0, 0
+  index: -1
+enemy2.2
+  rotate: false
+  xy: 667, 2
+  size: 199, 256
+  orig: 199, 256
+  offset: 0, 0
+  index: -1
+enemy3.0
+  rotate: false
+  xy: 308, 518
+  size: 229, 256
+  orig: 229, 256
+  offset: 0, 0
+  index: -1
+enemy3.1
+  rotate: false
+  xy: 539, 518
+  size: 229, 256
+  orig: 229, 256
+  offset: 0, 0
+  index: -1
+enemy3.2
+  rotate: false
+  xy: 770, 518
+  size: 229, 256
+  orig: 229, 256
+  offset: 0, 0
+  index: -1
+enemy3.3
+  rotate: false
+  xy: 791, 260
+  size: 229, 256
+  orig: 229, 256
+  offset: 0, 0
+  index: -1
+enemy5.0
+  rotate: false
+  xy: 868, 2
+  size: 152, 256
+  orig: 152, 256
+  offset: 0, 0
+  index: -1
 main-ship
   rotate: false
-  xy: 2, 29
+  xy: 2, 518
   size: 304, 256
   orig: 304, 256
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 308, 280
+  xy: 1001, 742
   size: 5, 5
   orig: 5, 5
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 512,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemy2.3
+  rotate: false
+  xy: 2, 518
+  size: 199, 256
+  orig: 199, 256
+  offset: 0, 0
+  index: -1
+enemy4.0
+  rotate: false
+  xy: 156, 260
+  size: 118, 256
+  orig: 118, 256
+  offset: 0, 0
+  index: -1
+enemy4.1
+  rotate: false
+  xy: 357, 518
+  size: 118, 256
+  orig: 118, 256
+  offset: 0, 0
+  index: -1
+enemy4.2
+  rotate: false
+  xy: 156, 2
+  size: 118, 256
+  orig: 118, 256
+  offset: 0, 0
+  index: -1
+enemy4.3
+  rotate: false
+  xy: 276, 260
+  size: 118, 256
+  orig: 118, 256
+  offset: 0, 0
+  index: -1
+enemy5.1
+  rotate: false
+  xy: 2, 260
+  size: 152, 256
+  orig: 152, 256
+  offset: 0, 0
+  index: -1
+enemy5.2
+  rotate: false
+  xy: 203, 518
+  size: 152, 256
+  orig: 152, 256
+  offset: 0, 0
+  index: -1
+enemy5.3
+  rotate: false
+  xy: 2, 2
+  size: 152, 256
+  orig: 152, 256
   offset: 0, 0
   index: -1

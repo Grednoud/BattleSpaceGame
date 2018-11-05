@@ -1,6 +1,7 @@
 package ru.codesteps.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,7 +12,9 @@ import ru.codesteps.BattleSpaceGame;
 import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.BaseScreen;
 import ru.codesteps.pools.BulletPool;
+import ru.codesteps.pools.EnemyPool;
 import ru.codesteps.sprites.Background;
+import ru.codesteps.sprites.Enemy;
 import ru.codesteps.sprites.MainShip;
 import ru.codesteps.sprites.Star;
 
@@ -19,15 +22,20 @@ public class GameScreen extends BaseScreen {
 
     private static final int STARS_COUNT = 64;
 
+    private float lastEnemyTime = 0;
+
     private Texture bgTexture;
     private Background background;
-    
+
     private TextureAtlas gameAtlas;
     private Star[] stars;
-    
+
     private MainShip ship;
-    
+
     private BulletPool bulletPool;
+    private EnemyPool enemyPool;
+
+    private Music music;
 
     public GameScreen(final BattleSpaceGame game) {
         super(game);
@@ -36,6 +44,12 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("sound/soundtrack.mp3"));
+        music.setVolume(0.7f);
+        music.setLooping(true);
+        music.play();
+
         bgTexture = new Texture("game-bg.jpg");
         background = new Background(new TextureRegion(bgTexture));
 
@@ -46,6 +60,8 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool = new BulletPool();
         ship = new MainShip(gameAtlas, bulletPool);
+
+        enemyPool = new EnemyPool();
     }
 
     @Override
@@ -61,6 +77,7 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         bgTexture.dispose();
         gameAtlas.dispose();
+        music.dispose();
         super.dispose();
     }
 
@@ -88,17 +105,23 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchDragged(Vector2 touch, int pointer) {
         ship.touchDragged(touch, pointer);
-        return super.touchDragged(touch, pointer); 
+        return super.touchDragged(touch, pointer);
     }
-    
-    
 
     private void update(float delta) {
         for (Star s : stars) {
             s.update(delta);
         }
+        lastEnemyTime -= delta;
+        if (lastEnemyTime < 0) {
+            Enemy enemy = enemyPool.obtain();
+            enemy.set(gameAtlas, new Vector2(0, -0.2f), 0.15f, worldBounds);
+            lastEnemyTime = 1;
+        }
+
         ship.update(delta);
         bulletPool.updateActiveObjects(delta);
+        enemyPool.updateActiveObjects(delta);
     }
 
     private void draw() {
@@ -111,16 +134,18 @@ public class GameScreen extends BaseScreen {
             s.draw(batch);
         }
         ship.draw(batch);
+        enemyPool.drawActiveObjects(batch);
         bulletPool.drawActiveObjects(batch);
         batch.end();
     }
 
     private void checkCollisions() {
-        
+
     }
 
     private void deleteAllDesroyed() {
-       bulletPool.freeAllDestroyedObjects();
+        bulletPool.freeAllDestroyedObjects();
+        enemyPool.freeAllDestroyedObjects();
     }
 
 }

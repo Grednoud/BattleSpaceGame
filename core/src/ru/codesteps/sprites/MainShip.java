@@ -1,6 +1,8 @@
 package ru.codesteps.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.base.BaseRectangle;
@@ -21,10 +23,13 @@ public class MainShip extends BaseSprite {
 
     private BaseRectangle worldBounds;
 
+    private Sound shootSound;
+
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main-ship"), 1, 2, 2);
         v = new Vector2();
         v0 = new Vector2(0.5f, 0);
+        shootSound = Gdx.audio.newSound(Gdx.files.internal("sound/shoot.wav"));
         this.atlas = atlas;
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
@@ -118,8 +123,10 @@ public class MainShip extends BaseSprite {
     }
 
     private void shoot() {
+        shootSound.play();
         Bullet bullet = bulletPool.obtain();
-        bullet.set(this, atlas.findRegion("bullet"), pos, new Vector2(0, 0.5f), 0.03f, worldBounds, 1);
+        bullet.set(this, atlas.findRegion("bullet"), pos, new Vector2(0, 0.8f), 0.03f, worldBounds, 1);
+
     }
 
 }
