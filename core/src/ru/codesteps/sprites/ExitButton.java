@@ -6,7 +6,7 @@ import ru.codesteps.base.BaseButton;
 import ru.codesteps.base.BaseRectangle;
 
 public class ExitButton extends BaseButton {
-    
+
     public ExitButton(TextureAtlas atlas, ActionListener actionListener) {
         super(atlas.findRegion("exit_btn"), actionListener);
     }
@@ -14,6 +14,9 @@ public class ExitButton extends BaseButton {
     @Override
     public void resize(BaseRectangle worldBounds) {
         setTop(0.20f);
+        clickArea.pos = pos;
+        clickArea.width = width * 0.426f;
+        clickArea.height = height * 0.289f;
     }
-    
+
 }

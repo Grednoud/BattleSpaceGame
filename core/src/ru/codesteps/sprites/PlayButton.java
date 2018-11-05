@@ -1,6 +1,7 @@
 package ru.codesteps.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.base.ActionListener;
 import ru.codesteps.base.BaseButton;
 import ru.codesteps.base.BaseRectangle;
@@ -14,6 +15,9 @@ public class PlayButton extends BaseButton {
     @Override
     public void resize(BaseRectangle worldBounds) {
         setTop(0.35f);
+        clickArea.pos = pos;
+        clickArea.width = width * 0.833f;
+        clickArea.height = height * 0.289f;
     }
 
 }
