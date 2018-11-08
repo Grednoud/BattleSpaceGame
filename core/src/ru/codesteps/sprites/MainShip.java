@@ -1,48 +1,30 @@
 package ru.codesteps.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.base.BaseRectangle;
-import ru.codesteps.base.BaseSprite;
+import ru.codesteps.base.Ship;
 import ru.codesteps.pools.BulletPool;
 
-public class MainShip extends BaseSprite {
+public class MainShip extends Ship {
 
-    private Vector2 v0;
-    private Vector2 v;
+    private Vector2 v0  = new Vector2(0.5f, 0);
 
     private boolean pressedLeft;
     private boolean pressedRight;
 
-    private BulletPool bulletPool;
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound shootSound) {
+        super(atlas.findRegion("main-ship"), 1, 2, 2, shootSound);
 
-    private TextureAtlas atlas;
-
-    private BaseRectangle worldBounds;
-
-    private Sound shootSound;
-
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
-        super(atlas.findRegion("main-ship"), 1, 2, 2);
-        v = new Vector2();
-        v0 = new Vector2(0.5f, 0);
-        shootSound = Gdx.audio.newSound(Gdx.files.internal("sound/shoot.wav"));
-        this.atlas = atlas;
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
-    }
-
-    @Override
-    public boolean touchUp(Vector2 touch, int pointer) {
-        return super.touchUp(touch, pointer);
-    }
-
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
-        return super.touchDown(touch, pointer);
+        this.bulletV.set(0, 0.5f);
+        this.bulletHeight = 0.03f;
+        this.bulletDamage = 1;
+        this.reloadInterval = 0.2f;
+        this.bulletRegion = atlas.findRegion("bullet");
     }
 
     @Override
@@ -53,6 +35,7 @@ public class MainShip extends BaseSprite {
 
     @Override
     public void update(float delta) {
+        pos.mulAdd(v, delta);
         if (worldBounds.getLeft() > getLeft()) {
             stop();
             setLeft(worldBounds.getLeft());
@@ -61,7 +44,11 @@ public class MainShip extends BaseSprite {
             stop();
             setRight(worldBounds.getRight());
         }
-        pos.mulAdd(v, delta);
+        reloadTimer += delta;
+        if (reloadTimer >= reloadInterval) {
+            shoot();
+            reloadTimer = 0f;
+        }
     }
 
     public boolean keyDown(int keyCode) {
@@ -111,7 +98,6 @@ public class MainShip extends BaseSprite {
 
     private void moveLeft() {
         v.set(v0).rotate(180);
-
     }
 
     private void moveRight() {
@@ -121,12 +107,4 @@ public class MainShip extends BaseSprite {
     private void stop() {
         v.setZero();
     }
-
-    private void shoot() {
-        shootSound.play();
-        Bullet bullet = bulletPool.obtain();
-        bullet.set(this, atlas.findRegion("bullet"), pos, new Vector2(0, 0.8f), 0.03f, worldBounds, 1);
-
-    }
-
 }

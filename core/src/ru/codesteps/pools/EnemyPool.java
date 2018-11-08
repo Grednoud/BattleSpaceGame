@@ -1,13 +1,25 @@
 package ru.codesteps.pools;
 
+import com.badlogic.gdx.audio.Sound;
+import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.SpritesPool;
 import ru.codesteps.sprites.Enemy;
 
-public class EnemyPool extends SpritesPool<Enemy> { 
+public class EnemyPool extends SpritesPool<Enemy> {
+
+    private BulletPool bulletPool;
+    private BaseRectangle worldBounds;
+    private Sound bulletSound;
+
+    public EnemyPool(BulletPool bulletPool, BaseRectangle worldBounds, Sound bulletSound) {
+        this.bulletPool = bulletPool;
+        this.worldBounds = worldBounds;
+        this.bulletSound = bulletSound;
+    }
 
     @Override
     protected Enemy newObject() {
-        return new Enemy();
+        return new Enemy(bulletPool, worldBounds, bulletSound);
     }
-    
+
 }
