@@ -12,7 +12,7 @@ public class EnemiesEmiter {
 
     private static final float ENEMY_HEIGHT = 0.15f;
     private static final float ENEMY_BULLET_HEIGHT = 0.02f;
-    private static final float ENEMY_BULLET_VY = -0.03f;
+    private static final float ENEMY_BULLET_VY = -0.5f;
     private static final int ENEMY_1_DAMAGE = 1;
     private static final float ENEMY_1_RELOAD_INTERVAL = 2f;
     private static final int ENEMY_1_HP = 1;
@@ -24,10 +24,10 @@ public class EnemiesEmiter {
     private TextureRegion[] enemy5Regions;
 
     private Vector2 enemy1V = new Vector2(0, -0.1f);
-    private Vector2 enemy2V = new Vector2(0, -0.2f);
-    private Vector2 enemy3V = new Vector2(0, -0.3f);
-    private Vector2 enemy4V = new Vector2(0, -0.4f);
-    private Vector2 enemy5V = new Vector2(0, -0.5f);
+    private Vector2 enemy2V = new Vector2(0, -0.15f);
+    private Vector2 enemy3V = new Vector2(0, -0.20f);
+    private Vector2 enemy4V = new Vector2(0, -0.25f);
+    private Vector2 enemy5V = new Vector2(0, -0.3f);
 
     private EnemyPool enemyPool;
     private BaseRectangle worldBounds;

@@ -11,36 +11,44 @@ import ru.codesteps.pools.BulletPool;
 
 public class Enemy extends Ship {
 
-    private Vector2 v0 = new Vector2();
+    private Vector2 v0 = new Vector2(0, -0.3f);
 
     public Enemy(BulletPool bulletPool, BaseRectangle worldBounds, Sound shootSound) {
         super(shootSound);
-        
+
         this.bulletPool = bulletPool;
         this.worldBounds = worldBounds;
-        this.v.set(v0);
     }
 
     @Override
     public void update(float delta) {
-        pos.mulAdd(v, delta);
-        if (isOutside(worldBounds)) {
-            destroy();
+        if (v.len() < v0.len() && getTop() > worldBounds.getTop()) {
+            pos.mulAdd(v0, delta);
+        } else {
+            pos.mulAdd(v, delta);
+            if (isOutside(worldBounds)) {
+                destroy();
+            }
+            reloadTimer += delta;
+            if (reloadTimer >= reloadInterval) {
+                shoot();
+                reloadTimer = 0f;
+            }
         }
     }
 
     public void set(
-            TextureRegion[] regions, 
-            Vector2 v0, 
-            TextureRegion bulletRegion, 
-            float bulletHeight, 
-            float bulletVY, 
-            int bulletDamage, 
-            float reloadInterval, 
-            float height, 
+            TextureRegion[] regions,
+            Vector2 v0,
+            TextureRegion bulletRegion,
+            float bulletHeight,
+            float bulletVY,
+            int bulletDamage,
+            float reloadInterval,
+            float height,
             int hp) {
         this.regions = regions;
-        this.v0.set(v0);
+        this.v.set(v0);
         this.bulletRegion = bulletRegion;
         this.bulletHeight = bulletHeight;
         this.bulletV.set(0f, bulletVY);
@@ -48,9 +56,7 @@ public class Enemy extends Ship {
         this.reloadInterval = reloadInterval;
         setHeightProportion(height);
         this.hp = hp;
-        v.set(v0);
         setAngle(180);
     }
-    
 
 }

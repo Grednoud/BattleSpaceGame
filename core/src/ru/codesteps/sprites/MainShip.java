@@ -23,7 +23,7 @@ public class MainShip extends Ship {
         this.bulletV.set(0, 0.5f);
         this.bulletHeight = 0.03f;
         this.bulletDamage = 1;
-        this.reloadInterval = 0.2f;
+        this.reloadInterval = 0.3f;
         this.bulletRegion = atlas.findRegion("bullet");
     }
 
