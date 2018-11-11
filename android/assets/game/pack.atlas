@@ -6,168 +6,188 @@ filter: Nearest,Nearest
 repeat: none
 bullet
   rotate: false
-  xy: 1001, 749
+  xy: 986, 822
   size: 5, 25
   orig: 5, 25
   offset: 0, 0
   index: -1
-enemy1.0
+chaer2
   rotate: false
-  xy: 2, 260
-  size: 261, 256
-  orig: 261, 256
+  xy: 2, 591
+  size: 522, 256
+  orig: 522, 256
   offset: 0, 0
   index: -1
-enemy1.1
+chaser0
   rotate: false
-  xy: 265, 260
-  size: 261, 256
-  orig: 261, 256
+  xy: 2, 333
+  size: 522, 256
+  orig: 522, 256
   offset: 0, 0
   index: -1
-enemy1.2
+chaser1
   rotate: false
-  xy: 528, 260
-  size: 261, 256
-  orig: 261, 256
+  xy: 2, 75
+  size: 522, 256
+  orig: 522, 256
   offset: 0, 0
   index: -1
-enemy1.3
+destroyer0
   rotate: false
-  xy: 2, 2
-  size: 261, 256
-  orig: 261, 256
+  xy: 526, 591
+  size: 458, 256
+  orig: 458, 256
   offset: 0, 0
   index: -1
-enemy2.0
+destroyer1
   rotate: false
-  xy: 265, 2
-  size: 199, 256
-  orig: 199, 256
+  xy: 526, 333
+  size: 458, 256
+  orig: 458, 256
   offset: 0, 0
   index: -1
-enemy2.1
+destroyer2
   rotate: false
-  xy: 466, 2
-  size: 199, 256
-  orig: 199, 256
+  xy: 526, 75
+  size: 458, 256
+  orig: 458, 256
   offset: 0, 0
   index: -1
-enemy2.2
+plasm
   rotate: false
-  xy: 667, 2
-  size: 199, 256
-  orig: 199, 256
-  offset: 0, 0
-  index: -1
-enemy3.0
-  rotate: false
-  xy: 308, 518
-  size: 229, 256
-  orig: 229, 256
-  offset: 0, 0
-  index: -1
-enemy3.1
-  rotate: false
-  xy: 539, 518
-  size: 229, 256
-  orig: 229, 256
-  offset: 0, 0
-  index: -1
-enemy3.2
-  rotate: false
-  xy: 770, 518
-  size: 229, 256
-  orig: 229, 256
-  offset: 0, 0
-  index: -1
-enemy3.3
-  rotate: false
-  xy: 791, 260
-  size: 229, 256
-  orig: 229, 256
-  offset: 0, 0
-  index: -1
-enemy5.0
-  rotate: false
-  xy: 868, 2
-  size: 152, 256
-  orig: 152, 256
-  offset: 0, 0
-  index: -1
-main-ship
-  rotate: false
-  xy: 2, 518
-  size: 304, 256
-  orig: 304, 256
+  xy: 2, 9
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 1001, 742
+  xy: 2, 2
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
 
 pack2.png
-size: 512,1024
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-enemy2.3
+chaser3
   rotate: false
   xy: 2, 518
-  size: 199, 256
-  orig: 199, 256
+  size: 522, 256
+  orig: 522, 256
   offset: 0, 0
   index: -1
-enemy4.0
+destroyer3
   rotate: false
-  xy: 156, 260
-  size: 118, 256
-  orig: 118, 256
+  xy: 526, 518
+  size: 458, 256
+  orig: 458, 256
   offset: 0, 0
   index: -1
-enemy4.1
-  rotate: false
-  xy: 357, 518
-  size: 118, 256
-  orig: 118, 256
-  offset: 0, 0
-  index: -1
-enemy4.2
-  rotate: false
-  xy: 156, 2
-  size: 118, 256
-  orig: 118, 256
-  offset: 0, 0
-  index: -1
-enemy4.3
-  rotate: false
-  xy: 276, 260
-  size: 118, 256
-  orig: 118, 256
-  offset: 0, 0
-  index: -1
-enemy5.1
+fighter0
   rotate: false
   xy: 2, 260
-  size: 152, 256
-  orig: 152, 256
+  size: 304, 256
+  orig: 304, 256
   offset: 0, 0
   index: -1
-enemy5.2
+fighter1
   rotate: false
-  xy: 203, 518
-  size: 152, 256
-  orig: 152, 256
+  xy: 308, 260
+  size: 304, 256
+  orig: 304, 256
   offset: 0, 0
   index: -1
-enemy5.3
+fighter2
+  rotate: false
+  xy: 614, 260
+  size: 304, 256
+  orig: 304, 256
+  offset: 0, 0
+  index: -1
+fighter3
   rotate: false
   xy: 2, 2
-  size: 152, 256
-  orig: 152, 256
+  size: 304, 256
+  orig: 304, 256
+  offset: 0, 0
+  index: -1
+frigate0
+  rotate: false
+  xy: 308, 2
+  size: 398, 256
+  orig: 398, 256
+  offset: 0, 0
+  index: -1
+main-ship
+  rotate: false
+  xy: 708, 2
+  size: 304, 256
+  orig: 304, 256
+  offset: 0, 0
+  index: -1
+
+pack3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+explosion
+  rotate: false
+  xy: 2, 2
+  size: 320, 320
+  orig: 320, 320
+  offset: 0, 0
+  index: -1
+frigate1
+  rotate: false
+  xy: 2, 582
+  size: 398, 256
+  orig: 398, 256
+  offset: 0, 0
+  index: -1
+frigate2
+  rotate: false
+  xy: 2, 324
+  size: 398, 256
+  orig: 398, 256
+  offset: 0, 0
+  index: -1
+frigate3
+  rotate: false
+  xy: 402, 582
+  size: 398, 256
+  orig: 398, 256
+  offset: 0, 0
+  index: -1
+terminator0
+  rotate: false
+  xy: 402, 324
+  size: 236, 256
+  orig: 236, 256
+  offset: 0, 0
+  index: -1
+terminator1
+  rotate: false
+  xy: 324, 66
+  size: 236, 256
+  orig: 236, 256
+  offset: 0, 0
+  index: -1
+terminator2
+  rotate: false
+  xy: 640, 324
+  size: 236, 256
+  orig: 236, 256
+  offset: 0, 0
+  index: -1
+terminator3
+  rotate: false
+  xy: 562, 66
+  size: 236, 256
+  orig: 236, 256
   offset: 0, 0
   index: -1

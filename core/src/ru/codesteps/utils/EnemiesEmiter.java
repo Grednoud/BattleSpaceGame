@@ -10,24 +10,52 @@ import ru.codesteps.sprites.Enemy;
 
 public class EnemiesEmiter {
 
-    private static final float ENEMY_HEIGHT = 0.15f;
-    private static final float ENEMY_BULLET_HEIGHT = 0.02f;
-    private static final float ENEMY_BULLET_VY = -0.5f;
-    private static final int ENEMY_1_DAMAGE = 1;
-    private static final float ENEMY_1_RELOAD_INTERVAL = 2f;
-    private static final int ENEMY_1_HP = 1;
+    private static final float FIGHTER_HEIGHT = 0.12f;
+    private static final float FIGHTER_BULLET_HEIGHT = 0.01f;
+    private static final float FIGHTER_BULLET_VY = -0.6f;
+    private static final int FIGHTER_DAMAGE = 1;
+    private static final float FIGHTER_RELOAD_INTERVAL = 0.3f;
+    private static final int FIGHTER_HP = 1;
 
-    private TextureRegion[] enemy1Regions;
-    private TextureRegion[] enemy2Regions;
-    private TextureRegion[] enemy3Regions;
-    private TextureRegion[] enemy4Regions;
-    private TextureRegion[] enemy5Regions;
+    private static final float TERMINATOR_HEIGHT = 0.13f;
+    private static final float TERMINATOR_BULLET_HEIGHT = 0.015f;
+    private static final float TERMINATOR_BULLET_VY = -0.6f;
+    private static final int TERMINATOR_DAMAGE = 3;
+    private static final float TERMINATOR_RELOAD_INTERVAL = 0.5f;
+    private static final int TERMINATOR_HP = 3;
 
-    private Vector2 enemy1V = new Vector2(0, -0.1f);
-    private Vector2 enemy2V = new Vector2(0, -0.15f);
-    private Vector2 enemy3V = new Vector2(0, -0.20f);
-    private Vector2 enemy4V = new Vector2(0, -0.25f);
-    private Vector2 enemy5V = new Vector2(0, -0.3f);
+    private static final float CHASER_HEIGHT = 0.13f;
+    private static final float CHASER_BULLET_HEIGHT = 0.015f;
+    private static final float CHASER_BULLET_VY = -0.6f;
+    private static final int CHASER_DAMAGE = 5;
+    private static final float CHASER_RELOAD_INTERVAL = 0.5f;
+    private static final int CHASER_HP = 5;
+
+    private static final float FRIGATE_HEIGHT = 0.25f;
+    private static final float FRIGATE_BULLET_HEIGHT = 0.03f;
+    private static final float FRIGATE_BULLET_VY = -0.6f;
+    private static final int FRIGATE_DAMAGE = 20;
+    private static final float FRIGATE_RELOAD_INTERVAL = 0.7f;
+    private static final int FRIGATE_HP = 10;
+    
+    private static final float DESTROYER_HEIGHT = 0.30f;
+    private static final float DESTROYER_BULLET_HEIGHT = 0.04f;
+    private static final float DESTROYER_BULLET_VY = -0.6f;
+    private static final int DESTROYER_DAMAGE = 30;
+    private static final float DESTROYER_RELOAD_INTERVAL = 0.9f;
+    private static final int DESTROYER_HP = 20;
+
+    private TextureRegion[] fighterRegions;
+    private TextureRegion[] terminatorRegions;
+    private TextureRegion[] chaserRegions;
+    private TextureRegion[] frigateRegions;
+    private TextureRegion[] destroyerRegions;
+
+    private Vector2 fighterV = new Vector2(0, -0.3f);
+    private Vector2 terminatorV = new Vector2(0, -0.25f);
+    private Vector2 chaserV = new Vector2(0, -0.20f);
+    private Vector2 frigateV = new Vector2(0, -0.1f);
+    private Vector2 destroyerV = new Vector2(0, -0.05f);
 
     private EnemyPool enemyPool;
     private BaseRectangle worldBounds;
@@ -39,22 +67,22 @@ public class EnemiesEmiter {
     public EnemiesEmiter(EnemyPool enemyPool, BaseRectangle worldBounds, TextureAtlas atlas) {
         this.enemyPool = enemyPool;
         this.worldBounds = worldBounds;
-        this.bulletRegion = atlas.findRegion("bullet");
+        this.bulletRegion = atlas.findRegion("plasm");
 
-        TextureRegion textureRegion1 = atlas.findRegion("enemy1.0");
-        this.enemy1Regions = RegionsUtil.split(textureRegion1, 1, 1, 1);
+        TextureRegion fighterRegion = atlas.findRegion("fighter0");
+        this.fighterRegions = RegionsUtil.split(fighterRegion, 1, 2, 2);
 
-        TextureRegion textureRegion2 = atlas.findRegion("enemy2.0");
-        this.enemy2Regions = RegionsUtil.split(textureRegion2, 1, 1, 1);
+        TextureRegion terminatorRegion = atlas.findRegion("terminator0");
+        this.terminatorRegions = RegionsUtil.split(terminatorRegion, 1, 2, 2);
 
-        TextureRegion textureRegion3 = atlas.findRegion("enemy3.0");
-        this.enemy3Regions = RegionsUtil.split(textureRegion3, 1, 1, 1);
+        TextureRegion chaserRegion = atlas.findRegion("chaser0");
+        this.chaserRegions = RegionsUtil.split(chaserRegion, 1, 2, 2);
 
-        TextureRegion textureRegion4 = atlas.findRegion("enemy4.0");
-        this.enemy4Regions = RegionsUtil.split(textureRegion4, 1, 1, 1);
+        TextureRegion frigateRegion = atlas.findRegion("frigate0");
+        this.frigateRegions = RegionsUtil.split(frigateRegion, 1, 2, 2);
 
-        TextureRegion textureRegion5 = atlas.findRegion("enemy5.0");
-        this.enemy5Regions = RegionsUtil.split(textureRegion5, 1, 1, 1);
+        TextureRegion destroyerRegion = atlas.findRegion("destroyer0");
+        this.destroyerRegions = RegionsUtil.split(destroyerRegion, 1, 2, 2);
     }
 
     public void generate(float delta) {
@@ -63,71 +91,71 @@ public class EnemiesEmiter {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
             float type = (float) Math.random();
-            if (type < 0.15f) {
+            if (type < 0.3f) {
                 enemy.set(
-                        enemy1Regions,
-                        enemy1V,
+                        fighterRegions,
+                        fighterV,
                         bulletRegion,
-                        ENEMY_BULLET_HEIGHT,
-                        ENEMY_BULLET_VY,
-                        ENEMY_1_DAMAGE,
-                        ENEMY_1_RELOAD_INTERVAL,
-                        ENEMY_HEIGHT,
-                        ENEMY_1_HP
-                );
-            } else if (type < 0.3f) {
-                enemy.set(
-                        enemy2Regions,
-                        enemy2V,
-                        bulletRegion,
-                        ENEMY_BULLET_HEIGHT,
-                        ENEMY_BULLET_VY,
-                        ENEMY_1_DAMAGE,
-                        ENEMY_1_RELOAD_INTERVAL,
-                        ENEMY_HEIGHT,
-                        ENEMY_1_HP
-                );
-            } else if (type < 0.45f) {
-                enemy.set(
-                        enemy3Regions,
-                        enemy3V,
-                        bulletRegion,
-                        ENEMY_BULLET_HEIGHT,
-                        ENEMY_BULLET_VY,
-                        ENEMY_1_DAMAGE,
-                        ENEMY_1_RELOAD_INTERVAL,
-                        ENEMY_HEIGHT,
-                        ENEMY_1_HP
+                        FIGHTER_BULLET_HEIGHT,
+                        FIGHTER_BULLET_VY,
+                        FIGHTER_DAMAGE,
+                        FIGHTER_RELOAD_INTERVAL,
+                        FIGHTER_HEIGHT,
+                        FIGHTER_HP
                 );
             } else if (type < 0.6f) {
                 enemy.set(
-                        enemy4Regions,
-                        enemy4V,
+                        terminatorRegions,
+                        terminatorV,
                         bulletRegion,
-                        ENEMY_BULLET_HEIGHT,
-                        ENEMY_BULLET_VY,
-                        ENEMY_1_DAMAGE,
-                        ENEMY_1_RELOAD_INTERVAL,
-                        ENEMY_HEIGHT,
-                        ENEMY_1_HP
+                        TERMINATOR_BULLET_HEIGHT,
+                        TERMINATOR_BULLET_VY,
+                        TERMINATOR_DAMAGE,
+                        TERMINATOR_RELOAD_INTERVAL,
+                        TERMINATOR_HEIGHT,
+                        TERMINATOR_HP
+                );
+            } else if (type < 0.8f) {
+                enemy.set(
+                        chaserRegions,
+                        chaserV,
+                        bulletRegion,
+                        CHASER_BULLET_HEIGHT,
+                        CHASER_BULLET_VY,
+                        CHASER_DAMAGE,
+                        CHASER_RELOAD_INTERVAL,
+                        CHASER_HEIGHT,
+                        CHASER_HP
+                );
+            } else if (type < 0.95f) {
+                enemy.set(
+                        frigateRegions,
+                        frigateV,
+                        bulletRegion,
+                        FRIGATE_BULLET_HEIGHT,
+                        FRIGATE_BULLET_VY,
+                        FRIGATE_DAMAGE,
+                        FRIGATE_RELOAD_INTERVAL,
+                        FRIGATE_HEIGHT,
+                        FRIGATE_HP
                 );
             } else {
                 enemy.set(
-                        enemy5Regions,
-                        enemy5V,
+                        destroyerRegions,
+                        destroyerV,
                         bulletRegion,
-                        ENEMY_BULLET_HEIGHT,
-                        ENEMY_BULLET_VY,
-                        ENEMY_1_DAMAGE,
-                        ENEMY_1_RELOAD_INTERVAL,
-                        ENEMY_HEIGHT,
-                        ENEMY_1_HP
+                        DESTROYER_BULLET_HEIGHT,
+                        DESTROYER_BULLET_VY,
+                        DESTROYER_DAMAGE,
+                        DESTROYER_RELOAD_INTERVAL,
+                        DESTROYER_HEIGHT,
+                        DESTROYER_HP
                 );
             }
-            
+
             enemy.setBottom(worldBounds.getTop());
-            enemy.pos.x = RandomUtil.nextFloat(worldBounds.getLeft()+enemy.width/2, 
-                    worldBounds.getRight()-enemy.width/2);
+            enemy.pos.x = RandomUtil.nextFloat(worldBounds.getLeft() + enemy.width / 2f,
+                    worldBounds.getRight() - enemy.width / 2f);
         }
     }
 

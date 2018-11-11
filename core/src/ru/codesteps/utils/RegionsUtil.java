@@ -21,7 +21,7 @@ public class RegionsUtil {
         int frame = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                textureRegions[frame] = new TextureRegion(region, taleWidth * i, taleHeight * j, taleWidth, taleHeight);
+                textureRegions[frame] = new TextureRegion(region, taleWidth * j, taleHeight * i, taleWidth, taleHeight);
                 if (frame == frames - 1) {
                     return textureRegions;
                 }

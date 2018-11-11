@@ -7,24 +7,27 @@ import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.Ship;
 import ru.codesteps.pools.BulletPool;
+import ru.codesteps.pools.ExplosionPool;
 
 public class MainShip extends Ship {
 
-    private Vector2 v0  = new Vector2(0.5f, 0);
+    private Vector2 v0 = new Vector2(0.5f, 0);
 
     private boolean pressedLeft;
     private boolean pressedRight;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound shootSound) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Sound shootSound) {
         super(atlas.findRegion("main-ship"), 1, 2, 2, shootSound);
 
         setHeightProportion(0.15f);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.bulletV.set(0, 0.5f);
         this.bulletHeight = 0.03f;
         this.bulletDamage = 1;
-        this.reloadInterval = 0.3f;
+        this.reloadInterval = 0.2f;
         this.bulletRegion = atlas.findRegion("bullet");
+        this.hp = 100;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class MainShip extends Ship {
 
     @Override
     public void update(float delta) {
+        super.update(delta);
         pos.mulAdd(v, delta);
         if (worldBounds.getLeft() > getLeft()) {
             stop();
@@ -44,11 +48,20 @@ public class MainShip extends Ship {
             stop();
             setRight(worldBounds.getRight());
         }
-        reloadTimer += delta;
-        if (reloadTimer >= reloadInterval) {
-            shoot();
-            reloadTimer = 0f;
+        if (!isDestroyed()) {
+            reloadTimer += delta;
+            if (reloadTimer >= reloadInterval) {
+                shoot();
+                reloadTimer = 0f;
+            }
         }
+    }
+
+    @Override
+    public void destroy() {
+        boom();
+        hp = 0;
+        super.destroy();
     }
 
     public boolean keyDown(int keyCode) {
@@ -84,7 +97,9 @@ public class MainShip extends Ship {
                 }
                 break;
             case Input.Keys.UP:
-                shoot();
+                if (!isDestroyed()) {
+                    shoot();
+                }
                 break;
         }
         return false;
@@ -106,5 +121,15 @@ public class MainShip extends Ship {
 
     private void stop() {
         v.setZero();
+    }
+
+    public boolean isDamaged(Bullet bullet) {
+        if (!(bullet.getLeft() < getLeft() || bullet.getRight() > getRight()
+                || bullet.getBottom() > pos.y || bullet.getTop() < getBottom())) {
+            damage(bullet.getDamage());
+            bullet.destroy();
+            return true;
+        }
+        return false;
     }
 }

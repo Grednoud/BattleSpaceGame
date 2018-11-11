@@ -12,6 +12,7 @@ public abstract class SpritesPool<T extends BaseSprite> {
     private static final Logger log = Logger.getLogger("SpritePool");
 
     protected final List<T> activeObjects;
+
     protected final List<T> freeObjects;
 
     public SpritesPool() {
@@ -71,5 +72,9 @@ public abstract class SpritesPool<T extends BaseSprite> {
             freeObjects.add(object);
         }
         log.log(Level.INFO, "active({0}) free({1})", new Object[]{activeObjects.size(), freeObjects.size()});
+    }
+
+    public List<T> getActiveObjects() {
+        return activeObjects;
     }
 }
