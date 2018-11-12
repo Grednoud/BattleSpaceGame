@@ -1,7 +1,6 @@
 package ru.codesteps.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import ru.codesteps.base.ActionListener;
 import ru.codesteps.base.BaseButton;
 import ru.codesteps.base.BaseRectangle;

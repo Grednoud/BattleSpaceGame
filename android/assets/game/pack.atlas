@@ -6,63 +6,70 @@ filter: Nearest,Nearest
 repeat: none
 bullet
   rotate: false
-  xy: 986, 822
+  xy: 986, 945
   size: 5, 25
   orig: 5, 25
   offset: 0, 0
   index: -1
 chaer2
   rotate: false
-  xy: 2, 591
+  xy: 2, 714
   size: 522, 256
   orig: 522, 256
   offset: 0, 0
   index: -1
 chaser0
   rotate: false
-  xy: 2, 333
+  xy: 2, 456
   size: 522, 256
   orig: 522, 256
   offset: 0, 0
   index: -1
 chaser1
   rotate: false
-  xy: 2, 75
+  xy: 2, 198
   size: 522, 256
   orig: 522, 256
   offset: 0, 0
   index: -1
 destroyer0
   rotate: false
-  xy: 526, 591
+  xy: 526, 714
   size: 458, 256
   orig: 458, 256
   offset: 0, 0
   index: -1
 destroyer1
   rotate: false
-  xy: 526, 333
+  xy: 526, 456
   size: 458, 256
   orig: 458, 256
   offset: 0, 0
   index: -1
 destroyer2
   rotate: false
-  xy: 526, 75
+  xy: 526, 198
   size: 458, 256
   orig: 458, 256
   offset: 0, 0
   index: -1
+game-over
+  rotate: false
+  xy: 2, 68
+  size: 640, 128
+  orig: 640, 128
+  offset: 0, 0
+  index: -1
 plasm
   rotate: false
-  xy: 2, 9
+  xy: 2, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 2, 2
+  xy: 644, 191
   size: 5, 5
   orig: 5, 5
   offset: 0, 0

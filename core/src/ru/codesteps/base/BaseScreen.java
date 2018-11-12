@@ -87,7 +87,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override

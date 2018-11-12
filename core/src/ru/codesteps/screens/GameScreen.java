@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 
 import ru.codesteps.BattleSpaceGame;
+import ru.codesteps.base.ActionListener;
 import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.BaseScreen;
 import ru.codesteps.pools.BulletPool;
@@ -19,6 +20,7 @@ import ru.codesteps.pools.ExplosionPool;
 import ru.codesteps.sprites.Background;
 import ru.codesteps.sprites.Bullet;
 import ru.codesteps.sprites.Enemy;
+import ru.codesteps.sprites.GameOverButton;
 import ru.codesteps.sprites.MainShip;
 import ru.codesteps.sprites.Star;
 import ru.codesteps.utils.EnemiesEmiter;
@@ -34,6 +36,8 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
 
     private MainShip ship;
+
+    private GameOverButton gameOverBtn;
 
     private ExplosionPool explosionPool;
     private BulletPool bulletPool;
@@ -74,6 +78,13 @@ public class GameScreen extends BaseScreen {
 
         enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds, bulletSound);
         enemiesEmiter = new EnemiesEmiter(enemyPool, worldBounds, gameAtlas);
+
+        gameOverBtn = new GameOverButton(gameAtlas, new ActionListener() {
+            @Override
+            public void actionPerformed(Object src) {
+                game.setMenuScreen();
+            }
+        });
     }
 
     @Override
@@ -96,6 +107,9 @@ public class GameScreen extends BaseScreen {
         bulletPool.updateActiveObjects(delta);
         enemyPool.updateActiveObjects(delta);
         explosionPool.updateActiveObjects(delta);
+        if (ship.isDestroyed()) {
+            gameOverBtn.update(delta);
+        }
     }
 
     private void draw() {
@@ -115,6 +129,10 @@ public class GameScreen extends BaseScreen {
         bulletPool.drawActiveObjects(batch);
         enemyPool.drawActiveObjects(batch);
         explosionPool.drawActiveObjects(batch);
+
+        if (ship.isDestroyed()) {
+            gameOverBtn.draw(batch);
+        }
 
         batch.end();
     }
@@ -184,6 +202,7 @@ public class GameScreen extends BaseScreen {
             s.resize(worldBounds);
         }
         ship.resize(worldBounds);
+        gameOverBtn.resize(worldBounds);
     }
 
     @Override
@@ -202,6 +221,22 @@ public class GameScreen extends BaseScreen {
     public boolean touchDragged(Vector2 touch, int pointer) {
         ship.touchDragged(touch, pointer);
         return super.touchDragged(touch, pointer);
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer) {
+        if (ship.isDestroyed()) {
+        gameOverBtn.touchUp(touch, pointer);
+        }
+        return super.touchUp(touch, pointer);
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer) {
+        if (ship.isDestroyed()) {
+            gameOverBtn.touchDown(touch, pointer);
+        }
+            return super.touchDown(touch, pointer);
     }
 
 }
