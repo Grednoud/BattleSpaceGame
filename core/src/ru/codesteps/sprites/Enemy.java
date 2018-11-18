@@ -85,6 +85,7 @@ public class Enemy extends Ship {
         if (!(bullet.getLeft() < getLeft() || bullet.getRight() > getRight()
                 || bullet.getTop() < pos.y || bullet.getBottom() > getTop())) {
             damage(bullet.getDamage());
+            hit(bullet);
             bullet.destroy();
             return true;
         }

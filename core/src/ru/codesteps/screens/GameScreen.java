@@ -14,6 +14,7 @@ import ru.codesteps.BattleSpaceGame;
 import ru.codesteps.base.ActionListener;
 import ru.codesteps.base.BaseRectangle;
 import ru.codesteps.base.BaseScreen;
+import ru.codesteps.base.Font;
 import ru.codesteps.pools.BulletPool;
 import ru.codesteps.pools.EnemyPool;
 import ru.codesteps.pools.ExplosionPool;
@@ -21,6 +22,7 @@ import ru.codesteps.sprites.Background;
 import ru.codesteps.sprites.Bullet;
 import ru.codesteps.sprites.Enemy;
 import ru.codesteps.sprites.GameOverButton;
+import ru.codesteps.sprites.HealthLine;
 import ru.codesteps.sprites.MainShip;
 import ru.codesteps.sprites.Star;
 import ru.codesteps.utils.EnemiesEmiter;
@@ -28,6 +30,15 @@ import ru.codesteps.utils.EnemiesEmiter;
 public class GameScreen extends BaseScreen {
 
     private static final int STARS_COUNT = 64;
+    private static final String HEALTH = "health: ";
+    private static final String TOTAL_DAMAGE = "total damage: ";
+
+    private StringBuilder sbTotalDamage = new StringBuilder();
+    private StringBuilder sbHealth = new StringBuilder();
+
+    private int totalDamage;
+
+    private HealthLine healthLine;
 
     private Texture bgTexture;
     private Background background;
@@ -48,6 +59,8 @@ public class GameScreen extends BaseScreen {
     private Sound bulletSound;
     private Sound explosionSound;
 
+    private Font font;
+
     public GameScreen(BattleSpaceGame game) {
         super(game);
     }
@@ -66,7 +79,11 @@ public class GameScreen extends BaseScreen {
         bgTexture = new Texture("game-bg.jpg");
         background = new Background(new TextureRegion(bgTexture));
 
+        font = new Font("font/font1.fnt", "font/font1.png");
+        font.setFontSize(0.012f);
+
         gameAtlas = new TextureAtlas("game/pack.atlas");
+
         stars = new Star[STARS_COUNT];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(gameAtlas);
@@ -75,6 +92,8 @@ public class GameScreen extends BaseScreen {
         explosionPool = new ExplosionPool(gameAtlas, explosionSound);
         bulletPool = new BulletPool();
         ship = new MainShip(gameAtlas, bulletPool, explosionPool, bulletSound);
+        
+        healthLine = new HealthLine(gameAtlas, ship);
 
         enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds, bulletSound);
         enemiesEmiter = new EnemiesEmiter(enemyPool, worldBounds, gameAtlas);
@@ -110,6 +129,7 @@ public class GameScreen extends BaseScreen {
         if (ship.isDestroyed()) {
             gameOverBtn.update(delta);
         }
+        healthLine.update(delta);
     }
 
     private void draw() {
@@ -118,6 +138,7 @@ public class GameScreen extends BaseScreen {
 
         batch.begin();
         background.draw(batch);
+        
         for (Star s : stars) {
             s.draw(batch);
         }
@@ -133,8 +154,20 @@ public class GameScreen extends BaseScreen {
         if (ship.isDestroyed()) {
             gameOverBtn.draw(batch);
         }
+        healthLine.draw(batch);
+        printScore();
 
         batch.end();
+    }
+
+    private void printScore() {
+        sbTotalDamage.setLength(0);
+        sbHealth.setLength(0);
+        font.draw(batch, sbHealth.append(HEALTH).append(ship.getHp()), -0.1f, worldBounds.getBottom() + 0.025f);
+        font.draw(batch,
+                sbTotalDamage.append(TOTAL_DAMAGE).append(totalDamage),
+                worldBounds.getLeft() + 0.01f,
+                worldBounds.getTop() - 0.025f);
     }
 
     private void checkCollisions() {
@@ -172,6 +205,7 @@ public class GameScreen extends BaseScreen {
                         continue;
                     }
                     if (enemy.isDamaged(bullet)) {
+                        totalDamage += bullet.getDamage();
                         return;
                     }
                 }
@@ -192,6 +226,7 @@ public class GameScreen extends BaseScreen {
         music.dispose();
         bulletSound.dispose();
         explosionSound.dispose();
+        font.dispose();
         super.dispose();
     }
 
@@ -203,6 +238,7 @@ public class GameScreen extends BaseScreen {
         }
         ship.resize(worldBounds);
         gameOverBtn.resize(worldBounds);
+        healthLine.resize(worldBounds);
     }
 
     @Override
@@ -226,7 +262,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         if (ship.isDestroyed()) {
-        gameOverBtn.touchUp(touch, pointer);
+            gameOverBtn.touchUp(touch, pointer);
         }
         return super.touchUp(touch, pointer);
     }
@@ -236,7 +272,7 @@ public class GameScreen extends BaseScreen {
         if (ship.isDestroyed()) {
             gameOverBtn.touchDown(touch, pointer);
         }
-            return super.touchDown(touch, pointer);
+        return super.touchDown(touch, pointer);
     }
 
 }
