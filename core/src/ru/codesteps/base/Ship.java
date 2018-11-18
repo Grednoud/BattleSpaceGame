@@ -74,5 +74,10 @@ public class Ship extends BaseSprite {
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, bulletDamage);
         shootSound.play(0.5f);
     }
+    
+    public void hit(Bullet bullet) {
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(bullet.height, bullet.pos);
+    }
 
 }

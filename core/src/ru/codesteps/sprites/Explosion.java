@@ -20,7 +20,7 @@ public class Explosion extends BaseSprite {
     public void set(float height, Vector2 pos) {
         setHeightProportion(height);
         this.pos.set(pos);
-        explosionSound.play(0.8f);
+        explosionSound.play(0.3f);
     }
 
     @Override

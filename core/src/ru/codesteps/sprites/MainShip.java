@@ -23,9 +23,9 @@ public class MainShip extends Ship {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         this.bulletV.set(0, 0.5f);
-        this.bulletHeight = 0.03f;
+        this.bulletHeight = 0.02f;
         this.bulletDamage = 1;
-        this.reloadInterval = 0.2f;
+        this.reloadInterval = 0.15f;
         this.bulletRegion = atlas.findRegion("bullet");
         this.hp = 100;
     }
@@ -127,9 +127,15 @@ public class MainShip extends Ship {
         if (!(bullet.getLeft() < getLeft() || bullet.getRight() > getRight()
                 || bullet.getBottom() > pos.y || bullet.getTop() < getBottom())) {
             damage(bullet.getDamage());
+            hit(bullet);
             bullet.destroy();
             return true;
         }
         return false;
     }
+
+    public float getHp() {
+        return hp;
+    }
+
 }

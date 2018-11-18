@@ -35,6 +35,7 @@ public class MenuScreen extends BaseScreen {
         super.show();
 
         shipTexture = new Texture("ship_logo.png");
+        shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         ship = new BaseSprite(new TextureRegion(shipTexture));
         ship.setHeightProportion(0.5f);
         ship.setTop(1f);
