@@ -19,9 +19,10 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     private static final Logger log = Logger.getLogger("BaseScreen");
 
     private BaseRectangle screenBounds;
-    private BaseRectangle worldBounds;
     private BaseRectangle glBounds;
     private Vector2 buffer;
+
+    protected BaseRectangle worldBounds;
 
     protected Matrix4 worldToGl;
     protected Matrix3 screenToWorld;
@@ -86,7 +87,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
@@ -119,7 +120,7 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchDown(Vector2 touch, int pointer) {
-        log.log(Level.INFO, "touchDown({0}, {1})", new Object[] {touch.x, touch.y});
+        log.log(Level.INFO, "touchDown({0}, {1})", new Object[]{touch.x, touch.y});
         return false;
     }
 
@@ -131,12 +132,19 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchUp(Vector2 touch, int pointer) {
-        log.log(Level.INFO, "touchUp({0}, {1})", new Object[] {touch.x, touch.y});
+        log.log(Level.INFO, "touchUp({0}, {1})", new Object[]{touch.x, touch.y});
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        buffer.set(screenX, screenBounds.height - screenY).mul(screenToWorld);
+        touchDragged(buffer, pointer);
+        return false;
+    }
+
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        log.log(Level.INFO, "touchDragged({0}, {1})", new Object[]{touch.x, touch.y});
         return false;
     }
 

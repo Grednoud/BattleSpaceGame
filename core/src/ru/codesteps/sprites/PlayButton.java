@@ -12,13 +12,11 @@ public class PlayButton extends BaseButton {
     }
 
     @Override
-    public void update(float delta) {
-        //TODO
-    }
-
-    @Override
     public void resize(BaseRectangle worldBounds) {
         setTop(0.35f);
+        clickArea.pos = pos;
+        clickArea.width = width * 0.833f;
+        clickArea.height = height * 0.289f;
     }
 
 }
