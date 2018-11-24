@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -143,7 +142,6 @@ public class GameScreen extends BaseScreen {
 
         batch.begin();
         background.draw(batch);
-
         for (Star s : stars) {
             s.draw(batch);
         }
@@ -168,7 +166,8 @@ public class GameScreen extends BaseScreen {
     private void printScore() {
         sbTotalDamage.setLength(0);
         sbHealth.setLength(0);
-        font.draw(batch, sbHealth.append(HEALTH).append(ship.getHp()), worldBounds.getLeft() + 0.01f, worldBounds.getBottom() + 0.025f);
+        font.draw(batch, sbHealth.append(HEALTH).append(ship.getHp()),
+                worldBounds.getLeft() + 0.01f, worldBounds.getBottom() + 0.025f);
         font.draw(batch,
                 sbTotalDamage.append(TOTAL_DAMAGE).append(totalDamage),
                 worldBounds.getLeft() + 0.01f,
