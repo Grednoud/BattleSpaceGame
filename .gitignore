@@ -1,2 +1,68 @@
-/.gradle/
-/.idea/
+# Gradle
+.gradle/
+build/
+out/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IDE - Visual Studio Code
+.vscode/
+
+# IDE - NetBeans
+nbproject/
+nbbuild/
+dist/
+nbdist/
+
+# Local configuration
+local.properties
+*.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Android specific
+android/libs/
+android/gen/
+android/.cxx/
+*.apk
+*.ap_
+*.dex
+
+# Desktop distribution
+desktop/build/
+*.jar
+
+# GWT
+gwt-unitCache/
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
+.apt_generated/
+html/war/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
